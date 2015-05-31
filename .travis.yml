@@ -7,8 +7,7 @@ env:
     | grep $TRAVIS_COMMIT | awk '{print $2}'`"
   - ARCH=arm
 script:
-- sudo apt-get update -q
-- sudo apt-get -y install docker
+- sudo curl -sSL https://get.docker.com/ | sh
 - docker run -t --rm --privileged -e "BUILD_NUMBER=0" -e "REAL_GIT_BRANCH=master" -v `pwd`:/src -v `pwd`/output:/out armhfcompiler ./packageforarm.sh
 
 deploy:
