@@ -1,5 +1,4 @@
 language: erlang
-install: sudo apt-get install docker.io
 env:
   global:
   - VERSION_NUMBER="`cat package.json | grep version | grep -o '[0-9]\.[0-9]\.[0-9]\+'`"
@@ -8,6 +7,8 @@ env:
     | grep $TRAVIS_COMMIT | awk '{print $2}'`"
   - ARCH=arm
 script:
+- sudo apt-get update -q
+- sudo apt-get -y install docker.io
 - docker run -t --rm --privileged -e "BUILD_NUMBER=0" -e "REAL_GIT_BRANCH=master" -v `pwd`:/src -v `pwd`/output:/out armhfcompiler ./packageforarm.sh
 
 deploy:
